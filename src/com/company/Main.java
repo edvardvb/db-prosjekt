@@ -1,0 +1,139 @@
+package com.company;
+
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Scanner;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class Main {
+    Scanner sc = new Scanner(System.in);
+
+    private void registrer_økt_usecase() throws Exception {
+        LagTreningsØkt conn = new LagTreningsØkt();
+
+        System.out.println("Velg dato - YYYY MM DD HH MM");
+        int year = Integer.parseInt(sc.nextLine())-1900;
+        int month = Integer.parseInt(sc.nextLine())-1;
+        int day = Integer.parseInt(sc.nextLine());
+        int hour = Integer.parseInt(sc.nextLine());
+        int minutes = Integer.parseInt(sc.nextLine());
+        System.out.println("Du skal nå fylle inn informasjon om økta, skriv NULL for å hoppe over et felt");
+        System.out.println("Ønsker du å følge en mal? - ja/nei");
+        String line = sc.nextLine();
+        if(line.equals("ja")){
+            System.out.println("Nei, det gjør du ikke");
+        }
+        System.out.println("Varighet - Tall i minutter - Kan ikke hoppe over");
+        int varighet = Integer.parseInt(sc.nextLine());
+        conn.lagTreningsØkt(new Date(year, month, day, hour, minutes, 0), varighet);
+        System.out.println("Personlig form - Tekst");
+        line = sc.nextLine();;
+        if(!line.equals("NULL")) {
+            conn.økt.setPersonlig_form(line);
+        }
+        System.out.println("Treningstips - Tekst");
+        line = sc.nextLine();
+        if(!line.equals("NULL")) {
+            conn.økt.setTreningstips(line);
+        }
+        System.out.println("Værforhold - Tekst");
+        line = sc.nextLine();
+        if(!line.equals("NULL")) {
+            conn.økt.setVærforhold(line);
+        }
+        System.out.println("Temperatur - heltall");
+        line = sc.nextLine();
+        if(!line.equals("NULL")) {
+            conn.økt.setTemperatur(Integer.parseInt(line));
+        }
+        System.out.println("Tilskuere - heltall");
+        line = sc.nextLine();
+        if(!line.equals("NULL")) {
+            conn.økt.setTilskuere(Integer.parseInt(line));
+        }
+        System.out.println("Luftkvalitet - tekst");
+        line = sc.nextLine();
+        if(!line.equals("NULL")) {
+            conn.økt.setLuftkvalitet(line);
+        }
+        String øktString = "";
+        try{
+            øktString = conn.fullførØkt();
+        }
+        catch (Exception e){
+            throw new Exception();
+        }
+        HashMap<Integer, String> øvelser = new HashMap<Integer, String>();
+        Statement stmt = conn.conn.createStatement();
+        while (true) {
+            System.out.println("Vil du legge til en eller flere øvelser? Skriv navnet på en øvelse, eller NULL for å avbryte");
+            line = sc.nextLine();
+            if(line.equals("NULL")) {
+                break;
+            }
+            ResultSet rs = stmt.executeQuery("select id, navn from Øvelse where navn ='"+line+"';");
+            rs.next();
+            øvelser.put(rs.getInt("id"), rs.getString("navn"));
+        }
+        for(Integer id : øvelser.keySet()){
+            System.out.println("Fyll inn litt informasjon om øvelse "+ øvelser.get(id) +" - NULL for å hoppe over");
+            LagResultat rConn = new LagResultat();
+            rConn.lagResultat(øktString, id);
+            System.out.println("Belastning - Tekst eller tall ");
+            line = sc.nextLine();
+            if(!line.equals("NULL")){
+                rConn.resultat.setBelastning(line);
+            }
+            System.out.println("Antall repetisjoner - heltall ");
+            line = sc.nextLine();
+            if(!line.equals("NULL")){
+                rConn.resultat.setAntall_rep(Integer.parseInt(line));
+            }
+            System.out.println("Antall sett - heltall ");
+            line = sc.nextLine();
+            if(!line.equals("NULL")){
+                rConn.resultat.setAntall_sett(Integer.parseInt(line));
+            }
+            System.out.println("Lengde - heltall ");
+            line = sc.nextLine();
+            if(!line.equals("NULL")){
+                rConn.resultat.setLengde(Integer.parseInt(line));
+            }
+            System.out.println("Varighet - HH:MM:SS");
+            line = sc.nextLine();
+            if(!line.equals("NULL")){
+                rConn.resultat.setVarighet(line);
+            }
+            System.out.println("Kommentar - Tekst");
+            line = sc.nextLine();
+            if(!line.equals("NULL")){
+                rConn.resultat.setKommentar(line);
+            }
+            rConn.fullførResultat();
+        }
+
+    }
+
+    private void getTopTen(){
+
+    }
+
+    public static void main(String[] args) throws Exception {
+        Main m = new Main();
+        System.out.println("Type 1, 2 or 3");
+        int scase = sc.nextInt();
+        switch (scase)
+        case 1:
+
+        }
+cd 
+        m.registrer_økt_usecase();
+
+    }
+}
+
