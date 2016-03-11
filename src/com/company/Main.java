@@ -1,14 +1,11 @@
 package com.company;
 
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 public class Main {
     Scanner sc = new Scanner(System.in);
@@ -168,6 +165,23 @@ public class Main {
 
     }
 
+
+    private void getTreningsNotater() throws Exception{
+        HentNotater conn = new HentNotater();
+        Statement stmt = conn.conn.createStatement();
+        ResultSet resultSet = stmt.executeQuery("select Treningsøkt.dato, Treningsøkt.treningstips, Resultat.kommentar from Treningsøkt left join Resultat on Treningsøkt.dato = Resultat.treningsøkt;");
+        while (resultSet.next()) {
+            System.out.print("Tidspunkt: ");
+            System.out.println(resultSet.getString(1));
+            System.out.println("Treningsnotat fra økten");
+            System.out.println(resultSet.getString(2));
+            System.out.println("Kommentar fra resultatet");
+            System.out.println(resultSet.getString(3));
+            System.out.println("-------------------------------");
+        }
+    }
+
+
     public static void main(String[] args) throws Exception {
         Main m = new Main();
         System.out.println("1 - Legg inn ny treningsøkt med resultater");
@@ -177,8 +191,13 @@ public class Main {
         switch (scase) {
             case 1:
                 m.registrer_økt_usecase();
+                break;
             case 2:
                 m.getTopTen();
+                break;
+            case 3:
+                m.getTreningsNotater();
+                break;
         }
     }
 
