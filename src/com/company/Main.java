@@ -184,20 +184,24 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         Main m = new Main();
-        System.out.println("1 - Legg inn ny treningsøkt med resultater");
-        System.out.println("2 - Hent top X for øvelse Y i periode A->B");
-        System.out.println("Type 1, 2 or 3");
-        int scase = Integer.parseInt(m.sc.nextLine());
-        switch (scase) {
-            case 1:
-                m.registrer_økt_usecase();
-                break;
-            case 2:
-                m.getTopTen();
-                break;
-            case 3:
-                m.getTreningsNotater();
-                break;
+
+        while(true) {
+            System.out.println("1 - Legg inn ny treningsøkt med resultater");
+            System.out.println("2 - Hent top X for øvelse Y i periode A->B");
+            System.out.println("3 - Hent alle notater fra økter og samsvarende kommentarer fra resultatene");
+            System.out.println("Velg 1, 2 or 3");
+            int scase = Integer.parseInt(m.sc.nextLine());
+            switch (scase) {
+                case 1:
+                    m.registrer_økt_usecase();
+                    break;
+                case 2:
+                    m.getTopTen();
+                    break;
+                case 3:
+                    m.getTreningsNotater();
+                    break;
+            }
         }
     }
 
