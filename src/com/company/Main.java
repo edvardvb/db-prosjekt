@@ -120,20 +120,69 @@ public class Main {
     }
 
     private void getTopTen(){
+        HentResultater hr = new HentResultater();
+        System.out.println("Hvor mange vil du ha med i lista?");
+        int number = Integer.parseInt(sc.nextLine());
+        try {
+            Statement stmt = hr.conn.createStatement();
+            System.out.println("Styrke eller utholdenhet?");
+            String line = sc.nextLine();
+            switch (line) {
+                case "styrke":
+                    System.out.println("Velg øvelse, skriv navnet nøyaktig");
+                    String line3 = sc.nextLine();
+                    int id = 0;
+                    try {
+                        ResultSet rs = stmt.executeQuery("select id from Øvelse where navn ='" + line3 + "';");
+                        rs.next();
+                        id = rs.getInt("id");
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                    System.out.println("Skriv inn startdato - YYYY-MM-DD HH:MM:SS");
+                    String startDato = sc.nextLine();
+                    System.out.println("Skriv inn sluttdato - YYYY-MM-DD HH:MM:SS");
+                    String sluttDato = sc.nextLine();
+                    hr.getTopStrength(number, id, startDato, sluttDato);
+                case "utholdenhet":
+                    System.out.println("Velg øvelse, skriv navnet nøyaktig");
+                    String line2 = sc.nextLine();
+                    id = 0;
+                    try {
+                        ResultSet rs = stmt.executeQuery("select id from Øvelse where navn ='" + line2 + "';");
+                        rs.next();
+                        id = rs.getInt("id");
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                    System.out.println("Skriv inn startdato - YYYY-MM-DD HH:MM:SS");
+                    startDato = sc.nextLine();
+                    System.out.println("Skriv inn sluttdato - YYYY-MM-DD HH:MM:SS");
+                    sluttDato = sc.nextLine();
+                    hr.getTopEndurance(number, id, startDato, sluttDato);
+            }
+        }
+        catch(SQLException e) {
+            System.out.println(e);
+        }
 
     }
 
     public static void main(String[] args) throws Exception {
         Main m = new Main();
+        System.out.println("1 - Legg inn ny treningsøkt med resultater");
+        System.out.println("2 - Hent top X for øvelse Y i periode A->B");
         System.out.println("Type 1, 2 or 3");
-        int scase = sc.nextInt();
-        switch (scase)
-        case 1:
-
+        int scase = Integer.parseInt(m.sc.nextLine());
+        switch (scase) {
+            case 1:
+                m.registrer_økt_usecase();
+            case 2:
+                m.getTopTen();
         }
-cd 
-        m.registrer_økt_usecase();
-
     }
+
+
 }
+
 
