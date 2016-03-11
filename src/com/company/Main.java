@@ -187,9 +187,9 @@ public class Main {
 
         while(true) {
             System.out.println("1 - Legg inn ny treningsøkt med resultater");
-            System.out.println("2 - Hent top X for øvelse Y i periode A->B");
+            System.out.println("2 - Hent topp X for øvelse Y i periode A->B");
             System.out.println("3 - Hent alle notater fra økter og samsvarende kommentarer fra resultatene");
-            System.out.println("Velg 1, 2 or 3");
+            System.out.println("Velg 1, 2 eller 3");
             int scase = Integer.parseInt(m.sc.nextLine());
             switch (scase) {
                 case 1:
