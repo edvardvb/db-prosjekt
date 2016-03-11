@@ -1,7 +1,6 @@
 package com.company;
 
 import java.sql.SQLException;
-import java.util.Date;
 
 public class LagØvelse extends DBConn {
     public Øvelse øvelse;
