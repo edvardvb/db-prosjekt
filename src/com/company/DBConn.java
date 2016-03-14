@@ -23,8 +23,8 @@ public abstract class DBConn {
             java.sql.Driver d = new com.mysql.jdbc.Driver();
             // Properties for user and password. Here the user and password are both 'paulr'
             Properties p = new Properties();
-            p.put("user", "tdt");
-            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1/mydb?autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull",p);
+            p.put("user", "tdt4145gruppe3");
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1/tdt4145gruppe3?autoReconnect=true&zeroDateTimeBehavior=convertToNull",p);
         } catch (Exception e)
     	{
             throw new RuntimeException("Unable to connect", e);

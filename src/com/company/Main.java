@@ -68,7 +68,8 @@ public class Main {
         HashMap<Integer, String> øvelser = new HashMap<Integer, String>();
         Statement stmt = conn.conn.createStatement();
         while (true) {
-            System.out.println("Vil du legge til en eller flere øvelser? Skriv navnet på en øvelse, eller NULL for å avbryte");
+            System.out.println("Vil du legge til en eller flere øvelser til økten? Skriv navnet på en øvelse, eller NULL for å avbryte");
+            System.out.println("Navnet på øvelsen MÅ matche (case sensitive) en av disse: Markløft 5x5x80, Benkpress 5x5x80, Løping 10KM eller Løping 5KM");
             line = sc.nextLine();
             if(line.equals("NULL")) {
                 break;
@@ -79,6 +80,8 @@ public class Main {
         }
         for(Integer id : øvelser.keySet()){
             System.out.println("Fyll inn litt informasjon om øvelse "+ øvelser.get(id) +" - NULL for å hoppe over");
+            System.out.println("For styrkeøvelser kan du hoppe over  Lengde og Varighet");
+            System.out.println("For utholdenhetsøvelser kan du hoppe over belastning, sett og repetisjoner");
             LagResultat rConn = new LagResultat();
             rConn.lagResultat(øktString, id);
             System.out.println("Belastning - Tekst eller tall ");
@@ -122,11 +125,12 @@ public class Main {
         int number = Integer.parseInt(sc.nextLine());
         try {
             Statement stmt = hr.conn.createStatement();
-            System.out.println("Styrke eller utholdenhet?");
+            System.out.println("Styrke eller utholdenhet? - Små bokstaver");
             String line = sc.nextLine();
             switch (line) {
                 case "styrke":
-                    System.out.println("Velg øvelse, skriv navnet nøyaktig");
+                    System.out.println("Velg øvelse, skriv navnet nøyaktig: Markløft 5x5x80, Benkpress 5x5x80");
+                    System.out.println("Anbefaler markløft, ligger flere resultater inne. Når du skal velge periode senere anbefaler vi 1. feb 2016 til 1. mars 2016");
                     String line3 = sc.nextLine();
                     int id = 0;
                     try {
@@ -142,7 +146,8 @@ public class Main {
                     String sluttDato = sc.nextLine();
                     hr.getTopStrength(number, id, startDato, sluttDato);
                 case "utholdenhet":
-                    System.out.println("Velg øvelse, skriv navnet nøyaktig");
+                    System.out.println("Velg øvelse, skriv navnet nøyaktig:  Løping 10KM eller Løping 5KM");
+                    System.out.println("Anbefaler Løping 10KM, ligger flere resultater inne. Når du skal velge periode senere anbefaler vi 1. feb 2016 til 1. mars 2016");
                     String line2 = sc.nextLine();
                     id = 0;
                     try {
@@ -186,8 +191,9 @@ public class Main {
         Main m = new Main();
 
         while(true) {
+            System.out.println("Hei! Dette programmet krever veldig spesifikk formatering av svarene, spesielt navn på øvelser!");
             System.out.println("1 - Legg inn ny treningsøkt med resultater");
-            System.out.println("2 - Hent topp X for øvelse Y i periode A->B");
+            System.out.println("2 - Hent topp X for øvelse Y i periode A --> B, sortert på dato, ikke prestasjon");
             System.out.println("3 - Hent alle notater fra økter og samsvarende kommentarer fra resultatene");
             System.out.println("Velg 1, 2 eller 3");
             int scase = Integer.parseInt(m.sc.nextLine());
